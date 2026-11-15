@@ -23,9 +23,10 @@ export ROSETTA_ADVERTISE_AVX=1
 export SteamAppId=949230
 export SteamGameId=949230
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Ensure compatibility patches are applied (only on first run or after game update)
 if [ -d "$GAME_DIR/Cities2_Data" ] && [ ! -f "$GAME_DIR/Cities2_Data/Managed/Game.dll.bak" ]; then
-    /Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/apply_cities2_fix.sh >/dev/null
+    "$SCRIPT_DIR/fixes/cities-skylines-2/apply_cities2_fix.sh" >/dev/null
 fi
 
 if [ -f "$CITIES2_EXE" ]; then

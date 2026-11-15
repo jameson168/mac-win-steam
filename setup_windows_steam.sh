@@ -19,8 +19,9 @@ TEMPLATE_URL="https://github.com/Sikarugir-App/Wrapper/releases/download/v1.0/Te
 WRAPPER_DIR="$HOME/Applications/Sikarugir"
 SIKARUGIR_APP="$WRAPPER_DIR/Steam.app"
 SHORTCUT_APP="$HOME/Applications/Steam (Windows).app"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INSTALLER_URL="https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe"
-INSTALLER_PATH="/Users/jameson/agy-proj/win-stem/SteamSetup.exe"
+INSTALLER_PATH="$SCRIPT_DIR/SteamSetup.exe"
 
 echo "==> 1. Ensuring Sikarugir Creator.app is installed..."
 if [ ! -d "/Applications/Sikarugir Creator.app" ]; then
