@@ -36,10 +36,10 @@ This project configures and maintains a standalone **Windows Steam** environment
 - **Fix Applied**:
   1. Disabled `winegstreamer` for `CapcomArcade2ndStadium.exe` only:
      `HKCU\Software\Wine\AppDefaults\CapcomArcade2ndStadium.exe\DllOverrides` $\rightarrow$ `"winegstreamer"=""`
-  2. Installed the FFmpeg-based ASF/VC-1/WMA Pro reader ([`mgvf-asf-reader.dll`](file:///Users/jameson/agy-proj/win-stem/fixes/re-engine-vc1/mgvf-asf-reader.dll)) and custom [`amd_ags_x64.dll`](file:///Users/jameson/agy-proj/win-stem/fixes/re-engine-vc1/amd_ags_x64.dll) proxy (built from [`mf-reader-fallback.c`](file:///Users/jameson/agy-proj/win-stem/fixes/re-engine-vc1/mf-reader-fallback.c) with SteamStub `OriginalFirstThunk == 0` and inline hook support, forwarding all 38 exports to `amd_ags_x64_real.dll`).
+  2. Installed the FFmpeg-based ASF/VC-1/WMA Pro reader ([`mgvf-asf-reader.dll`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/re-engine-vc1/mgvf-asf-reader.dll)) and custom [`amd_ags_x64.dll`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/re-engine-vc1/amd_ags_x64.dll) proxy (built from [`mf-reader-fallback.c`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/re-engine-vc1/mf-reader-fallback.c) with SteamStub `OriginalFirstThunk == 0` and inline hook support, forwarding all 38 exports to `amd_ags_x64_real.dll`).
 - **Re-applying the Fix** (if Steam verifies or updates the game files):
   ```bash
-  /Users/jameson/agy-proj/win-stem/fixes/re-engine-vc1/apply_capcom_fix.sh
+  /Users/jameson/agy-proj/mac-win-steam/fixes/re-engine-vc1/apply_capcom_fix.sh
   ```
 - **Diagnostic Logs**:
   - `C:\mgvf-mf-fallback.log` (`~/Applications/Sikarugir/Steam.app/Contents/SharedSupport/prefix/drive_c/mgvf-mf-fallback.log`)
@@ -50,7 +50,7 @@ This project configures and maintains a standalone **Windows Steam** environment
   - `HKCU\Environment` $\rightarrow$ `SteamDeck="1"`
   - `HKLM\System\CurrentControlSet\Control\Session Manager\Environment` $\rightarrow$ `SteamDeck="1"`
   - Required so Marvel Rivals' launcher/anti-cheat recognizes the Wine environment as Steam Deck compatible.
-- **Helper Script**: [`open_marvel_rivals.sh`](file:///Users/jameson/agy-proj/win-stem/open_marvel_rivals.sh)
+- **Helper Script**: [`open_marvel_rivals.sh`](file:///Users/jameson/agy-proj/mac-win-steam/open_marvel_rivals.sh)
 
 ### C. Cities: Skylines II (App ID `949230`)
 - **Known macOS Wine / D3DMetal Issues Fixed**:
@@ -60,19 +60,19 @@ This project configures and maintains a standalone **Windows Steam** environment
      ```text
      "C:\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2.exe" %command%
      ```
-- **Fixes Installed ([`fixes/cities-skylines-2/`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2))**:
+- **Fixes Installed ([`fixes/cities-skylines-2/`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2))**:
   - **IL / DLL Patchers** (`.bak` backups created automatically):
-    - [`patch_colossal_io.py`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/patch_colossal_io.py): Patches `Colossal.IO.dll` (`EnumerateFileSystemIterator` / `EnumerateFileSystemIteratorRecursive`) to bypass `Marshal.GetLastWin32Error()` checks after `FindNextFile`, and relaxes `LongFile.OpenRead`/`OpenWrite` `FileShare` flags (`0x1D`) to prevent concurrent `.coc` file `IOException` errors.
-    - [`patch_asset_database.py`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/patch_asset_database.py): Patches `Colossal.IO.AssetDatabase.dll` (`PopulateFromDirectory`) to skip `.priority` `File.Exists()` checks under Wine.
-    - [`patch_cohtml.py`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/patch_cohtml.py): Patches `cohtml_unity3dplugin.dll` (`0F 84` $\rightarrow$ `0F 85`) when the legacy pattern is present.
-    - [`patch_game_upscaler.py`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/patch_game_upscaler.py): Patches `Game.Rendering.UpscalerManager.GetDefaultUpscaler()` in `Game.dll` (`1.6.4f1+`) to return `Upscaler.None` (`0`) instead of `Upscaler.FSR3`, fixing the black terrain bug on macOS D3DMetal.
+    - [`patch_colossal_io.py`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/patch_colossal_io.py): Patches `Colossal.IO.dll` (`EnumerateFileSystemIterator` / `EnumerateFileSystemIteratorRecursive`) to bypass `Marshal.GetLastWin32Error()` checks after `FindNextFile`, and relaxes `LongFile.OpenRead`/`OpenWrite` `FileShare` flags (`0x1D`) to prevent concurrent `.coc` file `IOException` errors.
+    - [`patch_asset_database.py`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/patch_asset_database.py): Patches `Colossal.IO.AssetDatabase.dll` (`PopulateFromDirectory`) to skip `.priority` `File.Exists()` checks under Wine.
+    - [`patch_cohtml.py`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/patch_cohtml.py): Patches `cohtml_unity3dplugin.dll` (`0F 84` $\rightarrow$ `0F 85`) when the legacy pattern is present.
+    - [`patch_game_upscaler.py`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/patch_game_upscaler.py): Patches `Game.Rendering.UpscalerManager.GetDefaultUpscaler()` in `Game.dll` (`1.6.4f1+`) to return `Upscaler.None` (`0`) instead of `Upscaler.FSR3`, fixing the black terrain bug on macOS D3DMetal.
   - **Registry & Prefix Settings**:
     - `HKCU\Environment` $\rightarrow$ `TMPDIR="C:\users\jameson\Temp"`
     - `HKLM\System\CurrentControlSet\Control\Session Manager\Environment` $\rightarrow$ `TMPDIR="C:\windows\temp"`
     - `C:\users\jameson\AppData\Local\JetBrains\Toolbox\.settings.json` (`{}` stub to prevent `RiderPathLocator` `DirectoryNotFoundException`).
 - **Installer & Direct Launcher Scripts**:
-  - Apply/re-apply fix: [`fixes/cities-skylines-2/apply_cities2_fix.sh`](file:///Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/apply_cities2_fix.sh)
-  - Direct game launcher (bypasses Paradox Launcher): [`open_cities_skylines_2.sh`](file:///Users/jameson/agy-proj/win-stem/open_cities_skylines_2.sh)
+  - Apply/re-apply fix: [`fixes/cities-skylines-2/apply_cities2_fix.sh`](file:///Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/apply_cities2_fix.sh)
+  - Direct game launcher (bypasses Paradox Launcher): [`open_cities_skylines_2.sh`](file:///Users/jameson/agy-proj/mac-win-steam/open_cities_skylines_2.sh)
 
 ---
 
@@ -82,9 +82,9 @@ Yes—if you ever wipe the wrapper or set up a new Apple Silicon Mac from scratc
 
 ### Step 1: Build the Sikarugir Wrapper, Wine 10.0 Prefix, D3DMetal/MSync, and Install Windows Steam
 ```bash
-/Users/jameson/agy-proj/win-stem/setup_windows_steam.sh
+/Users/jameson/agy-proj/mac-win-steam/setup_windows_steam.sh
 ```
-What [`setup_windows_steam.sh`](file:///Users/jameson/agy-proj/win-stem/setup_windows_steam.sh) does automatically:
+What [`setup_windows_steam.sh`](file:///Users/jameson/agy-proj/mac-win-steam/setup_windows_steam.sh) does automatically:
 1. Installs `Sikarugir Creator.app` via Homebrew if not present.
 2. Downloads `WS12WineSikarugir10.0_6.tar.xz` (Wine 10.0 + D3DMetal + MSync) and `Template-1.0.11.tar.xz`.
 3. Assembles [`~/Applications/Sikarugir/Steam.app`](file:///Users/jameson/Applications/Sikarugir/Steam.app) and configures [`Info.plist`](file:///Users/jameson/Applications/Sikarugir/Steam.app/Contents/Info.plist) (`D3DMETAL=1`, `WINEMSYNC=1`, `WINEESYNC=1`).
@@ -95,10 +95,10 @@ What [`setup_windows_steam.sh`](file:///Users/jameson/agy-proj/win-stem/setup_wi
 ### Step 2: Apply Game-Specific Fixes
 ```bash
 # For Cities: Skylines II:
-/Users/jameson/agy-proj/win-stem/fixes/cities-skylines-2/apply_cities2_fix.sh
+/Users/jameson/agy-proj/mac-win-steam/fixes/cities-skylines-2/apply_cities2_fix.sh
 
 # For Capcom Arcade 2nd Stadium:
-/Users/jameson/agy-proj/win-stem/fixes/re-engine-vc1/apply_capcom_fix.sh
+/Users/jameson/agy-proj/mac-win-steam/fixes/re-engine-vc1/apply_capcom_fix.sh
 ```
 
 ---
