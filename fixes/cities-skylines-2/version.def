@@ -1,0 +1,18 @@
+LIBRARY version.dll
+EXPORTS
+    GetFileVersionInfoA = version_real.GetFileVersionInfoA @1
+    GetFileVersionInfoExA = version_real.GetFileVersionInfoExA @2
+    GetFileVersionInfoExW = version_real.GetFileVersionInfoExW @3
+    GetFileVersionInfoSizeA = version_real.GetFileVersionInfoSizeA @4
+    GetFileVersionInfoSizeExA = version_real.GetFileVersionInfoSizeExA @5
+    GetFileVersionInfoSizeExW = version_real.GetFileVersionInfoSizeExW @6
+    GetFileVersionInfoSizeW = version_real.GetFileVersionInfoSizeW @7
+    GetFileVersionInfoW = version_real.GetFileVersionInfoW @8
+    VerFindFileA = version_real.VerFindFileA @9
+    VerFindFileW = version_real.VerFindFileW @10
+    VerInstallFileA = version_real.VerInstallFileA @11
+    VerInstallFileW = version_real.VerInstallFileW @12
+    VerLanguageNameA = version_real.VerLanguageNameA @13
+    VerLanguageNameW = version_real.VerLanguageNameW @14
+    VerQueryValueA = version_real.VerQueryValueA @15
+    VerQueryValueW = version_real.VerQueryValueW @16
